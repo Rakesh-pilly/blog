@@ -10,11 +10,11 @@ const Blogs = () => {
     .catch(err => console.log(err))
 
     const data = await res.data;
-
+    console.log(data)
     return data;
   }
   useEffect(()=> {
-    sendResut().then(data => setBlogs(data.blogs))
+    sendResut().then(data => (setBlogs(data.blogs)))
   },[])
 
 
@@ -22,7 +22,10 @@ const Blogs = () => {
   return (
     <div>
        {blogs && blogs.map((blog, index)=> {
-        return <Blog key = {index} userName = {blog.user.name} imageUrl = {blog.image} descripation = {blog.description} title = {blog.title}/>
+        return <Blog
+        isUser = {localStorage.getItem("userId") == blog.user._id}
+        id = {blog._id}
+        key = {index} userName = {blog.user.name} imageUrl = {blog.image} descripation = {blog.description} title = {blog.title}/>
        })
       }
 

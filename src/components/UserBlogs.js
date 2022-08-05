@@ -5,6 +5,7 @@ const UserBlogs = () => {
 
   const [blogs , setBlogs] = useState();
   const id = localStorage.getItem("userId");
+  const [user, setUser] = useState("")
 
   const sendRequest = async () => {
     const res = await axios
@@ -12,6 +13,7 @@ const UserBlogs = () => {
       .catch((err) => console.log(err));
 
       const data = await res.data;
+      setUser(data.blogs.name)
       return data
   };
   useEffect(() => {
@@ -23,7 +25,10 @@ const UserBlogs = () => {
 
   return <div>
         {blogs && blogs.map((blog, index)=> {
-        return <Blog key = {index} userName = {blog.user.name} imageUrl = {blog.image} descripation = {blog.description} title = {blog.title}/>
+        return <Blog
+        isUser={true}
+        id = {blog._id}
+        key = {index} userName = {user} imageUrl = {blog.image} descripation = {blog.description} title = {blog.title}/>
        })
       }
   </div>;
